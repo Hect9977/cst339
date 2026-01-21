@@ -21,3 +21,6 @@
 - This is a screenshot of the Hello World index.html page
 
 ![Hello World Output](helloWorld.png)
+
+# Part 2
+## Screenshots
