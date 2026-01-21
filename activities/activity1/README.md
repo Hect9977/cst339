@@ -1,45 +1,20 @@
 # Activity 1
 
 
-- This is **Activity 1** ...
+## This is **CST339 - Activity 1 - Introduction to Spring Boot**
 
+# Part 1
 ## Screenshots
 
-- This is screenshot of Hello World Program
+- This is screenshot of the Spring Tool About
+![Spring Boot About](springBootAbout.png)
 
-![hello World](helloWorld.png)
+- This is a screenshot of console output when running the Topic11Application class.
+![Spring Boot Start](springBootStartUp.png)
 
-- This is Spring Boot Screenshot
+- This is a screenshot of the Whitelabel Error Page.
+![White Label](whiteLabel.png)
 
-![Spring Boot](springBoot.png)
+- This is a screenshot of the Hello World index.html page
 
-
-
-```mermaid
----
-title: MermaidJS - Class Diagram - Animal example
----
-classDiagram
-    note "From Duck till Zebra"
-    Animal <|-- Duck
-    note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
-    Animal <|-- Fish
-    Animal <|-- Zebra
-    Animal : +int age
-    Animal : +String gender
-    Animal: +isMammal()
-    Animal: +mate()
-    class Duck{
-        +String beakColor
-        +swim()
-        +quack()
-    }
-    class Fish{
-        -int sizeInFeet
-        -canEat()
-    }
-    class Zebra{
-        +bool is_wild
-        +run()
-    }
-```
+![Hello World Output](helloWorld.png)
