@@ -38,3 +38,5 @@
 ![JAR Execution](hellowWorld%20JAR%20Execution.png)
 
 - This is a screenshot of the Hello World index.html page.
+
+![Index Output](htmlOutput.png)
