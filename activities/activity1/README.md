@@ -24,3 +24,17 @@
 
 # Part 2
 ## Screenshots
+
+- This is a screenshot of the Maven Build configurations.
+
+![Build Confiuration](mavenBuildConfig.png)
+
+- This is a screenshot of the Maven Console, with a **BUILD SUCCESS**.
+
+![Build Success](buildSuccess.png)
+
+- This is a screenshot of the Java ARchive (JAR) file Execution.
+
+![JAR Execution](hellowWorld%20JAR%20Execution.png)
+
+- This is a screenshot of the Hello World index.html page.
