@@ -43,12 +43,13 @@ Each product will include:
 - Delete a product
 
 ### Other Requirements
-- Form input validation (example: price cannot be negative)
-- Responsive design using **Bootstrap**
-- Follows **N-Layer architecture**:
-  - Presentation layer (UI)
-  - Business/service layer (logic)
-  - Persistence layer (data access)
+- **Check user input:** make sure forms are filled out correctly (example: price can’t be negative).
+- **Mobile-friendly pages:** the site should look good on phones and computers (using Bootstrap).
+- **Organized code (N-Layer):** keep the code separated into parts:
+  - **UI:** pages and buttons the user clicks
+  - **Logic:** rules and actions (what the app should do)
+  - **Data:** saving and loading information (database later)
+
 
 ### Planned for Later Milestones
 - Database storage (MySQL or PostgreSQL)
