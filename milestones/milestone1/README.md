@@ -44,7 +44,7 @@ Each product will include:
 
 ### Other Requirements
 - **Check user input:** make sure forms are filled out correctly (example: price can’t be negative).
-- **Mobile-friendly pages:** the site should look good on phones and computers (using Bootstrap).
+- **Friendly Use Pages:** the site should look good on phones and computers.
 - **Organized code (N-Layer):** keep the code separated into parts:
   - **UI:** pages and buttons the user clicks
   - **Logic:** rules and actions (what the app should do)
