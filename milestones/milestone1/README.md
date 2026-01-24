@@ -77,24 +77,31 @@ Each product will include:
 
 ---
 
-## 4) Work Plan + Division of Work
+## 4) Work Plan + Division of Work (Simple)
 
-### Project Management Approach
-We will manage the project using a simple **Agile** approach:
-- Maintain a task board (Trello or GitHub Projects)
-- Each week, select tasks for the milestone
-- Meet 1–2 times per week to review progress
-- Demo working features at the end of each milestone
+### How we will manage the project
+- Use a simple task board (GitHub Projects).
+- For each milestone, we will:
+  - List the tasks we need to finish
+  - Split the tasks between teammates
+  - Meet 1–2 times during the week to check progress
+  - Show what works at the end (a quick demo)
 
-### Division of Work (2-Person Example)
-- **Person A (Backend):**
-  - Controllers, services, product logic
-  - Later: database and security integration
-- **Person B (Frontend):**
-  - Thymeleaf pages, Bootstrap layout, navigation
-  - Validation messages and UI consistency
+### Who will do what (3-person team)
+- **Person A (Backend / Logic):**
+  - Write the main Spring Boot code (controllers + services)
+  - Make sure the app follows the rules (business logic)
 
-> If we have 3 people, one member will focus on database + security later milestones.
+- **Person B (Frontend / Pages):**
+  - Build the web pages using Thymeleaf
+  - Make pages look good with Bootstrap
+  - Show validation messages on forms
+
+- **Person C (Database + Security):**
+  - Plan and later connect the database (MySQL/PostgreSQL)
+  - Help add Spring Security login protection
+  - Help with REST API setup in later milestones
+
 
 ---
 
