@@ -10,6 +10,8 @@
 
 #### Planning Documentation
 
+- <mark>I used my pervious project of a Pet Store from my previous class to fill out this assignent!</mark>
+
 ###### Initial Planning
 
 The project will be managed using a simple Agile approach:
