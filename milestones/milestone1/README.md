@@ -1,139 +1,218 @@
-# CST-339 Milestone 1 — Project Proposal
+# Grand Canyon University (GCU) Programming in Java III CST-339 - Milestone 1
 
-## Overview
-In this course, we will design and build a complete **enterprise-class N-Layer application** using the **Spring Boot** framework.  
-For **Milestone 1**, we must submit a project proposal, an initial sitemap, a draft division of work, a plan for managing the project, and a list of risks.
+## Project Proposal, Sitemap and Division of Work
 
----
+#### Project Status and Design Report
 
-## 1) Domain and Products (This is what the app manages)
+|User Story|Team Member|Hours Worked|Hours Remaining|
+|--|--|--|--|
+|Milestone 1 Proposal, Sitemap, Division of Work|Hector Gonzalez|12|70|
 
-### Domain
-A small **pet store** inventory and catalog management system.
+#### Planning Documentation
 
-### Products Managed
-The application will manage items the pet store sells, such as:
-- Pet food
-- Toys
-- Treats
-- Grooming supplies
-- Accessories
+###### Initial Planning
 
-### Product Data (The Initial Fields)
-Each product will include:
-- **Name**
-- **Category** (Food, Toy, Treat, Grooming, etc.)
-- **Price**
-- **Quantity in stock**
-- **Description**
+The project will be managed using a simple Agile approach:
 
----
+- We will use a task board (GitHub Projects) to track work.
+- For each milestone, we will:
+  - Write a short list of tasks that must be completed
+  - Assign tasks to each teammate
+  - Meet 1–2 times during the week to check progress and unblock issues
+  - Demo what we finished at the end of the milestone (screencast or live demo if needed)
 
-## 2) High-Level Features (This is what will the app do while it's running)
+Communication and coordination:
+- Main communication: (Discord / Microsoft Teams / Group Chat)
+- File sharing: (GitHub repo + shared document for the report)
+- Each person will push work to a feature branch and merge after review (when possible).
 
-### User Features
-- Register an account
-- Login / Logout
+###### Retrospective Results
 
-### Product Features (CRUD)
-- View all products (table/list)
-- Add a new product
-- View product details
-- Edit a product
-- Delete a product
+Post anything that went well or bad here (update weekly). Example:
 
-### Other Requirements
-- **Check user input:** make sure forms are filled out correctly (example: price can’t be negative).
-- **Friendly Use Pages:** the site should look good on phones and computers.
-- **Organized code (N-Layer):** keep the code separated into parts:
-  - **UI:** pages and buttons the user clicks
-  - **Logic:** rules and actions (what the app should do)
-  - **Data:** saving and loading information (database later)
+**Went well**
+- Clear agreement on project topic and scope
+- Tasks were split evenly
+- Sitemap and feature list matched the milestone requirements
 
+**Needs improvement**
+- (Example) Need quicker responses in group chat
+- (Example) Need to define product fields earlier
+- (Example) Need to meet at a consistent time
 
-### Planned for Later Milestones
-- Database storage (MySQL or PostgreSQL)
-- Spring Security to protect pages (login required)
-- Secured REST APIs
+#### Design Documentation
 
----
+###### General Technical Approach
 
-## 3) Sitemap (Pages and Navigation)
+This application will be built as an **N-Layer Spring Boot web app**:
 
-### Public Pages
+- **UI Layer (Presentation):** Spring MVC and Bootstrap pages the user interacts with
+- **Logic Layer (Business):** service classes that contain the rules and “what the app does”
+- **Data Layer (Persistence):** database and data access code (added in later milestones)
+
+The web pages will use **Bootstrap** so they look good on phones and computers.
+
+###### Key Technical Design Decisions
+
+**Domain Choice:** Pet store inventory and product catalog management.
+
+**Main “Product” Entity:** Pet store items (food, toys, treats, grooming supplies, accessories).
+
+**Initial Product Fields:**
+- Name
+- Category
+- Price
+- Quantity in stock
+- Description
+
+**Main Features Planned:**
+- User registration and login
+- Product CRUD (list, add, details, edit, delete)
+- Form validation (example: price cannot be negative)
+- Responsive UI (Bootstrap)
+- Clear N-Layer separation (keep UI, logic, and data separate)
+
+Planned later milestones:
+- Add relational database (MySQL/PostgreSQL)
+- Add Spring Security to protect pages
+- Add secured REST endpoints for products
+
+###### Risks
+
+**Risk 1: Spring Security may be confusing.**  
+Mitigation: Add security step-by-step and test on a small number of pages first.
+
+**Risk 2: Switching to a database later could break earlier code.**  
+Mitigation: Keep data access code in its own layer so it is easier to change.
+
+**Risk 3: Doing too much extra work (scope creep).**  
+Mitigation: Only build what the milestone requires first. Save extra ideas for later.
+
+**Risk 4: Team coordination issues (missed meetings, uneven workload).**  
+Mitigation: Use the task board, short weekly check-ins, and clear task assignments.
+
+###### Division of Work (3-Person Team Approach)
+
+- **Person A (Backend / Logic)**
+  - Build Spring Boot controllers and service classes
+  - Make sure the “rules” of the app are correct (business logic)
+
+- **Person B (Frontend / Pages)**
+  - Build Thymeleaf pages and navigation
+  - Use Bootstrap for layout and responsive design
+  - Display validation messages on forms
+
+- **Person C (Database + Security)**
+  - Plan the database structure and help connect the database in later milestones
+  - Help implement Spring Security login protection later
+  - Help with REST API setup later milestones
+
+###### Division of Work (Solo Approach)
+
+If one person is doing the project, the work will be simplified like this:
+
+- **Step 1: Build the backend first**
+  - Create basic controllers and services for products and users
+
+- **Step 2: Build the pages**
+  - Create Thymeleaf pages for login/register and product CRUD
+  - Add Bootstrap for a clean layout
+
+- **Step 3: Test and validate**
+  - Add form validation (required fields, price >= 0, quantity >= 0)
+  - Make sure navigation works
+
+- **Step 4 (Later milestones): Add database + security**
+  - Connect to MySQL/PostgreSQL
+  - Add Spring Security one page at a time
+  - Add REST endpoints when required
+
+## Sitemap Diagram
+
+Below is the initial sitemap and how pages connect.
+
+### Public Pages (No Login Needed)
 - `/` — Home
-- `/register` — Register
+- `/register` — Register account
 - `/login` — Login
 
-### After Login
-- `/dashboard` — Dashboard
-- `/products` — Product List
+### After Login (Secured Later)
+- `/dashboard` — Main landing page after login
+- `/products` — Product list (table)
 
-### From Product List
-- `/products/new` — Add Product
-- `/products/{id}` — Product Details
-- `/products/{id}/edit` — Edit Product
-- `/products/{id}/delete` — Delete Product (confirm + submit)
+### Product Pages (Linked from Product List)
+- `/products/new` — Add product
+- `/products/{id}` — Product details
+- `/products/{id}/edit` — Edit product
+- `/products/{id}/delete` — Delete confirmation
 
+### Mermaid Sitemap:
+<details>
+
+```mermaid
 ---
-
-## 4) Work Plan + Division of Work (Simple)
-
-### How we will manage the project
-- Use a simple task board (GitHub Projects).
-- For each milestone, we will:
-  - List the tasks we need to finish
-  - Split the tasks between teammates
-  - Meet 1–2 times during the week to check progress
-  - Show what works at the end (a quick demo)
-
-### Who will do what (3-person team)
-- **Person A (Backend / Logic):**
-  - Write the main Spring Boot code (controllers + services)
-  - Make sure the app follows the rules (business logic)
-
-- **Person B (Frontend / Pages):**
-  - Build the web pages using Thymeleaf
-  - Make pages look good with Bootstrap
-  - Show validation messages on forms
-
-- **Person C (Database + Security):**
-  - Plan and later connect the database (MySQL/PostgreSQL)
-  - Help add Spring Security login protection
-  - Help with REST API setup in later milestones
-
-> This section is only for a 3 person team.
-
-### If only one person is doing the project (solo plan)
-- **Week/Milestone workflow**
-  - Make a short task list for the milestone
-  - Build the backend first (controllers/services)
-  - Build the pages next such as using **Bootstrap**
-  - Test the forms and validation
-  - Push updates to Git and write a short progress note/demo
-
-- **How the work is split (all done by one person)**
-  - **Backend + Logic:** build the Spring Boot controllers and services
-  - **Frontend + Pages:** create Bootstrap layout
-  - **Database + Security (for later on the course):** connect the database and add Spring Security step-by-step
-
-> Tip: focus on one feature at a time (example: “Product List” first), then move to the next feature.
-
-
+title: MermaidJS - FlowChart - Pet Store
 ---
+flowchart TD
+    %% Public Pages
+    Home["Home ( / )"] --> Register["Register ( /register )"]
+    Home --> Login["Login ( /login )"]
+    Register --> Login
 
-## 5) Risks and Mitigation
+    %% After Login
+    Login --> Dashboard["Dashboard ( /dashboard )"]
 
-### Risk 1 — Spring Security complexity
-**Mitigation:** Implement security step-by-step starting with basic protected routes.
+    %% Product Pages
+    Dashboard --> Products["Products List ( /products )"]
+    Products --> AddProduct["Add Product ( /products/new )"]
+    Products --> ProductDetails["Product Details ( /products/{id} )"]
+    ProductDetails --> EditProduct["Edit Product ( /products/{id}/edit )"]
+    ProductDetails --> DeleteProduct["Delete Confirm ( /products/{id}/delete )"]
 
-### Risk 2 — Database refactor later may break features
-**Mitigation:** Keep database logic in a separate layer so it can be swapped in cleanly.
+```
 
-### Risk 3 — Scope creep (too many extra features)
-**Mitigation:** Build only required milestone features first; track extra ideas as “future enhancements.”
+</details>
 
----
 
-## Instructor Approval
-This project concept will be submitted to the instructor for approval before moving forward.
+**How the pages interact:**
+- Home → Register → Login → Dashboard
+- Dashboard → Products List
+- Products List → (Add / View / Edit / Delete)
+
+## User Interface Diagram (if applicable)
+
+Optional notes (can be replaced with a picture/wireframe later):
+
+- Top navigation (after login): Dashboard | Products | Logout
+- Product list page: table of products + buttons (View/Edit/Delete) + “Add Product”
+- Add/Edit product page: form fields + validation messages
+
+## Class Diagram (if applicable)
+
+Not required for Milestone 1, but planned classes include:
+
+- `Product` (model)
+- `User` (model)
+- `ProductController` (UI/controller layer)
+- `ProductService` (business layer)
+- `ProductRepository` or `ProductDAO` (data layer, later milestone)
+
+## Service API Design (if applicable)
+
+Not required for Milestone 1. Planned later milestones:
+
+- `GET /api/products` — return all products
+- `GET /api/products/{id}` — return one product by id
+
+## Security Design (if applicable)
+
+Not required for Milestone 1. Planned later milestones:
+
+- Use Spring Security for form login
+- Require login for all pages except home/register/login
+- Secure REST endpoints (no anonymous access)
+
+## Miscellaneous
+
+- Project will be submitted for instructor approval before moving forward.
+- Team will keep scope focused on milestone requirements first.
