@@ -102,6 +102,23 @@ Each product will include:
   - Help add Spring Security login protection
   - Help with REST API setup in later milestones
 
+> This section is only for a 3 person team.
+
+### If only one person is doing the project (solo plan)
+- **Week/Milestone workflow**
+  - Make a short task list for the milestone
+  - Build the backend first (controllers/services)
+  - Build the pages next such as using **Bootstrap**
+  - Test the forms and validation
+  - Push updates to Git and write a short progress note/demo
+
+- **How the work is split (all done by one person)**
+  - **Backend + Logic:** build the Spring Boot controllers and services
+  - **Frontend + Pages:** create Bootstrap layout
+  - **Database + Security (for later on the course):** connect the database and add Spring Security step-by-step
+
+> Tip: focus on one feature at a time (example: “Product List” first), then move to the next feature.
+
 
 ---
 
