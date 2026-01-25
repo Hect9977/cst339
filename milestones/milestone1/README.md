@@ -6,7 +6,7 @@
 
 |User Story|Team Member|Hours Worked|Hours Remaining|
 |--|--|--|--|
-|Milestone 1 Proposal, Sitemap, Division of Work|Hector Gonzalez|12|70|
+|Milestone 1 Proposal, Sitemap, Division of Work|Hector Gonzalez|25|70|
 
 #### Planning Documentation
 
