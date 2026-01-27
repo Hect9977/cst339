@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Hello</title>
+</head>
+<body>
+
+    <h2 th:text="${message}">This is my defualt text</h2>
+
+    <!-- Step 15: link to test4 with HTTP parameter "message" -->
+    <a th:href="@{test4?message=Hello World from a Thymeleaf template!}">Go to /Test4</a>
+
+    <!-- Step 17: more links -->
+    <a th:href="@{/hello/test2}">Go to Test2</a>
+    <br/>
+    <a th:href="@{/hello/test3}">Go to Test3</a>
+
+</body>
+</html>
