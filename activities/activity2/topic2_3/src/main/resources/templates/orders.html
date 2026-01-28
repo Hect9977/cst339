@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${title}">Orders</title>
+</head>
+<body>
+
+<h2 th:text="${title}">My Orders</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- Empty list message -->
+        <tr th:if="${orders.empty}">
+            <td colspan="4">No Orders Available</td>
+        </tr>
+
+        <!-- Orders rows -->
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderNo}">A0000</td>
+            <td th:text="${order.productName}">Item</td>
+            <td th:text="${order.price}">0.00</td>
+            <td th:text="${order.quantity}">0</td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
