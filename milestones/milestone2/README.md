@@ -11,7 +11,7 @@
 |Milestone 2: Login Module (No Database) | Solo | 5 | 0 |
 |Milestone 2: Responsive UI using Bootstrap | Solo | 3 | 0 |
 |Milestone 2: Thymeleaf Layouts (Fragments: head/nav/footer) | Solo | 3 | 0 |
-|Milestone 2: Debugging + Fixes (Validation + Thymeleaf errors) | Solo | 4 | 0 |
+|Milestone 2: Debugging + Fixes (Validation + Thymeleaf errors) | Solo | 2 | 0 |
 
 ---
 
