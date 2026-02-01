@@ -2,7 +2,7 @@
 
 ## Project Proposal, Sitemap and Division of Work
 
-#### Project Status and Design Report
+### Project Status and Design Report
 
 |User Story|Team Member|Hours Worked|Hours Remaining|
 |--|--|--|--|
@@ -15,9 +15,9 @@
 
 ---
 
-#### Planning Documentation
+### Planning Documentation
 
-###### Initial Planning
+#### Initial Planning
 
 The project will be implemented as a simple Spring Boot N-layer web application using Spring MVC and Thymeleaf. For Milestone 2, the focus is on building the basic site shell and the authentication pages (registration and login) **without using a database**. The application will use:
 - Spring MVC controllers to handle routes (Home, Register, Login, Dashboard).
@@ -27,7 +27,7 @@ The project will be implemented as a simple Spring Boot N-layer web application 
 
 A lightweight in-memory service will temporarily store registered users (email/password) to simulate authentication until Milestone 3+ introduces a database layer.
 
-###### Retrospective Results
+### Retrospective Results
 
 **What went well**
 - The homepage and navigation were created quickly using Bootstrap.
