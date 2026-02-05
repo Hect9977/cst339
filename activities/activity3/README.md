@@ -1,4 +1,4 @@
-# Activity 2
+# Activity 3
 
 
 ## This is **CST339 - Activity 3  - Spring Bean Services using Spring Core**
