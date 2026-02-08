@@ -13,28 +13,33 @@ import com.gcu.services.ProductService;
 
 import jakarta.validation.Valid;
 
+// Controller for handling product-related requests
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
+    // IoC injection of ProductService
     private final ProductService productService; // IoC injection
 
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
+    // Display list of products 
     @GetMapping
     public String list(Model model) {
         model.addAttribute("products", productService.findAll());
         return "products/list";
     }
 
+    // Show form to create a new product
     @GetMapping("/create")
     public String showCreate(Model model) {
         model.addAttribute("form", new ProductForm());
         return "products/create";
     }
 
+    // Handle form submission to create a new product
     @PostMapping("/create")
     public String doCreate(@Valid @ModelAttribute("form") ProductForm form,
                            BindingResult bindingResult) {
