@@ -10,7 +10,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.gcu.model.OrderModel;
 
-public class OrdersDataService {
+public class OrdersDataService implements DataAccessInterface<OrderModel> {
     private final DataSource dataSource;
     private final JdbcTemplate jdbcTemplateObject;
 
