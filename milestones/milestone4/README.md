@@ -1,4 +1,4 @@
-# Grand Canyon University (GCU) Programming in Java III CST-339 - Milestone 3
+# Grand Canyon University (GCU) Programming in Java III CST-339 - Milestone 4
 
 ## Project Proposal, Sitemap and Division of Work
 
@@ -16,6 +16,14 @@
 |Milestone 3: Product List Page (to verify create works) | Solo | 2 | 0 |
 |Milestone 3: Refactor Auth to Spring Beans + IoC (Service Interfaces + Injection) | Solo | 3 | 0 |
 |Milestone 3: Updated Design Report + Diagrams | Solo | 2 | 0 |
+|Milestone 4: MySQL Database Setup + Schema (USERS, PRODUCTS) | Solo | 3 | 0 |
+|Milestone 4: Configure Spring Boot DataSource (Hikari) + JDBC Driver | Solo | 2 | 0 |
+|Milestone 4: Spring Data JDBC Repositories (UserRepository, ProductRepository) | Solo | 3 | 0 |
+|Milestone 4: Persist Registration/Login to Database (AuthServiceImpl + UserEntity) | Solo | 4 | 0 |
+|Milestone 4: Persist Products to Database (ProductServiceImpl + ProductEntity) | Solo | 4 | 0 |
+|Milestone 4: Fix Routing + Thymeleaf Template Paths (dashboard/products views) | Solo | 2 | 0 |
+|Milestone 4: Debugging + Fixes (DB name/table errors, template errors, driver class typo) | Solo | 3 | 0 |
+|Milestone 4: Updated Design Report + Diagrams | Solo | 2 | 0 |
 
 ---
 
@@ -23,30 +31,32 @@
 
 ### Initial Planning
 
-The project will be implemented as a simple Spring Boot N-layer web application using Spring MVC and Thymeleaf.  
-For **Milestone 3**, the focus is on adding the **Product Creation module** while refactoring the authentication components to follow **Spring Core / IoC** best practices — all **without using a database**.
+For **Milestone 4**, the project evolves from in-memory storage into a database-backed Spring Boot N-layer web application.
 
 The application uses:
 - Spring MVC controllers to handle routes (Home, Register, Login, Dashboard, Products).
 - Thymeleaf templates for server-side rendered pages.
-- Bootstrap CDN for responsive layout and form styling.
-- Thymeleaf fragments (head/navbar/footer) for consistent shared UI.
-- In-memory services for users and products (temporary until later milestones introduce persistence).
+- Bootstrap CDN for responsive layout and consistent UI.
+- Thymeleaf fragments (head/navbar/footer) for shared layouts.
+- **MySQL database** for persistent storage.
+- **Spring Data JDBC repositories** to interact with MySQL for Users and Products.
 
 ### Retrospective Results
 
 **What went well**
-- Milestone 2 pages stayed stable while new Milestone 3 features were added.
-- Product creation was straightforward using Spring MVC forms + validation.
-- Refactoring Auth into interfaces and service beans made the design cleaner and more “enterprise”.
+- Switching from in-memory lists to Spring Data JDBC repositories made persistence straightforward.
+- Once the templates were placed in the correct location/names, navigation became stable again.
+- Database-backed products creation and listing match the Milestone requirements well.
 
 **What was challenging**
-- IoC refactoring required separating controller responsibilities from service responsibilities.
-- Form validation and Thymeleaf error rendering needed proper binding context inside the `<form th:object="...">`.
+- Database mismatch issues (application pointing to a different schema than the one where tables were created).
+- Template resolver errors (Whitelabel 500) when the controller returned a view name that did not exist.
+- DataSource failures when the driver class name was incorrect (typo such as `com.mysql.cj.jdbc.Drive` instead of `Driver`) or the MySQL connector dependency was missing.
 
 **How we fixed issues**
-- Ensured form errors are shown inside the `<form>` so Thymeleaf can bind errors correctly.
-- Created service interfaces (AuthService/ProductService) and used constructor injection to demonstrate IoC clearly.
+- Verified the configured DB name in `application.properties` matched the schema where tables exist.
+- Ensured templates exist under `src/main/resources/templates/` and match the returned view names.
+- Confirmed the MySQL connector dependency is present and the driver class is correct.
 
 ---
 
@@ -54,7 +64,7 @@ The application uses:
 
 ### General Technical Approach
 
-This Milestone 3 application uses a layered approach:
+This Milestone 4 application uses a layered approach:
 
 - **Presentation Layer (View):**
   - Thymeleaf templates render pages such as Home, Register, Login, Dashboard, Products List, and Create Product.
@@ -66,9 +76,11 @@ This Milestone 3 application uses a layered approach:
 
 - **Service Layer (Business Logic / Spring Core):**
   - `AuthService` and `ProductService` are Spring-managed beans.
-  - Implementations use in-memory data structures (maps/lists) because Milestone 3 does not use a database.
+  - Implementations now call repository methods instead of using in-memory collections.
 
-No persistence layer is included yet because Milestone 3 explicitly requires **no database**.
+- **Persistence Layer (Database / Repository):**
+  - MySQL stores persistent Users and Products.
+  - Spring Data JDBC repositories handle SQL operations (find by email, find all, save, etc.).
 
 ### Key Technical Design Decisions
 
@@ -77,28 +89,56 @@ No persistence layer is included yet because Milestone 3 explicitly requires **n
 
 2. **Use Thymeleaf + Fragments**
    - Shared fragments (head/navbar/footer) keep pages consistent and reduce duplication.
+   - Updated fragment syntax recommended: `~{fragments/head :: head('Title')}` to avoid warnings.
 
 3. **Use Bootstrap via CDN**
    - Provides responsive UI with minimal configuration.
 
-4. **Use IoC / Spring Beans for Services**
-   - Refactored authentication and product logic into service beans.
-   - Controllers use constructor injection to follow IoC and keep controllers thin.
+4. **Use Spring Data JDBC**
+   - Repositories replace in-memory storage.
+   - Enables persistence without adding the complexity of JPA/Hibernate mappings.
 
-5. **Use Bean Validation**
-   - Applied validation annotations to Auth and Product forms.
-   - Used `@Valid` and `BindingResult` to display validation errors on the same page.
+5. **Use MySQL Schema and Tables**
+   - Users and products stored in MySQL for persistence across application restarts.
+   - Schema created using SQL scripts (database + USERS + PRODUCTS tables).
+
+6. **Use Bean Validation**
+   - Validation annotations on form models (RegisterForm, LoginForm, ProductForm).
+   - `@Valid` and `BindingResult` used to display errors on the same page.
+
+### Database Design (Milestone 4)
+
+**Schema**
+- A single schema/database (example: `milestoneDB`)
+
+**Tables**
+- `USERS`
+  - `ID` (PK, auto increment)
+  - `EMAIL` (unique)
+  - `PASSWORD`
+  - `FIRST_NAME`
+  - `LAST_NAME`
+
+- `PRODUCTS`
+  - `ID` (PK, auto increment)
+  - `NAME`
+  - `DESCRIPTION`
+  - `PRICE`
+  - `QUANTITY`
+
+> Important note: the application must connect to the same database where these tables were created.
+> For example, if tables were created in `milestoneDB` but Spring is connecting to `cst339`, you will see errors like “Table 'cst339.users' doesn't exist”.
 
 ### Risks
 
 - **No real security framework yet**
-  - Authentication uses sessions and simple checks instead of Spring Security (planned later).
-- **In-memory storage resets on restart**
-  - Users and products disappear after application restarts (expected for Milestone 3).
-- **Basic session-based access**
-  - Dashboard and product pages may require session checks; risk of exposing pages if not guarded.
-- **Future database integration**
-  - In-memory services must be replaced with repository/DAO layer later.
+  - Authentication uses sessions and simple checks instead of Spring Security.
+- **Password storage**
+  - If passwords are stored as plain text, this is a security risk. (Hashing is recommended even if not required.)
+- **Database configuration errors**
+  - Wrong DB name, missing tables, or missing/incorrect JDBC driver can prevent the app from starting.
+- **Template mismatch**
+  - If controller returns `products` but the file is `Products.html` (case/name mismatch), Thymeleaf cannot resolve it.
 
 ### Division of Work (Solo Approach)
 
@@ -106,13 +146,15 @@ Work was split by feature modules:
 
 - UI + Layout: fragments and Bootstrap styling
 - Controllers: HomeController, AuthController, DashboardController, ProductController
-- Models: LoginForm, RegisterForm, ProductForm, User, Product
-- Services: AuthService/InMemoryAuthService, ProductService/InMemoryProductService
-- Testing/Debugging: validation fixes, Thymeleaf form binding, redirects/navigation
+- Models: LoginForm, RegisterForm, ProductForm
+- Entities: UserEntity, ProductEntity
+- Repositories: UserRepository, ProductRepository (Spring Data JDBC)
+- Services: AuthService/AuthServiceImpl, ProductService/ProductServiceImpl
+- Testing/Debugging: DB connection, schema alignment, template names, routing and redirects
 
 ---
 
-## Sitemap Diagram (Milestone 3)
+## Sitemap Diagram (Milestone 4)
 
 ### Mermaid Site Map
 
@@ -137,7 +179,7 @@ flowchart TD
     Login --> LoginSubmit["Login Submit (POST /login)"]
     LoginSubmit --> Dashboard["Dashboard (GET /dashboard)"]
 
-    %% Products Module (Milestone 3)
+    %% Products Module (Milestone 4 - Database-backed)
     Dashboard --> Products["Products List (GET /products)"]
     Products --> CreateProduct["Create Product (GET /products/create)"]
     CreateProduct --> CreateSubmit["Create Submit (POST /products/create)"]
@@ -153,44 +195,58 @@ flowchart TD
 ```
 </details>
 
-## How the Pages Interact (Milestone 3)
+## How the Pages Interact (Milestone 4)
 
 Home → Register → Register Success  
 Home → Login → Dashboard  
 Dashboard → Products List → Create Product → Products List  
 Dashboard → Logout → Home  
 
-### Technical Notes
+---
 
-- `GET /products` shows the current in-memory product list.
-- `GET /products/create` shows the create product form.
-- `POST /products/create` validates input and saves the product into an in-memory list, then redirects back to `/products`.
+## Technical Notes (Milestone 4)
+
+- **GET /products**  
+  Loads products from the database and displays them in a table.
+
+- **GET /products/create**  
+  Displays the product creation form.
+
+- **POST /products/create**  
+  Validates input and inserts the product into MySQL, then redirects to `/products`.
 
 ---
 
-## User Interface Diagram (Milestone 3)
+## User Interface Diagram (Milestone 4)
 
-Optional notes (can be replaced with a picture/wireframe later):
+- **Top navigation:**  
+  Home | Register | Login | Dashboard | Products | Logout
 
-- **Top navigation:** Home | Register | Login | Dashboard | Products | Logout
-- **Home page:** welcome + navigation links
-- **Register page:** form fields + validation messages
-- **Login page:** form fields + validation messages + global error on failed login
-- **Dashboard page:** shows session-based user info (name/email)
-- **Products list page:** table of products + “Add Product” button
-- **Create product page:** product form fields + validation messages
+- **Home page:**  
+  Welcome message with navigation links.
+
+- **Register page:**  
+  Registration form fields with validation messages.
+
+- **Login page:**  
+  Login form fields with validation messages and a global error on failed login.
+
+- **Dashboard page:**  
+  Displays session-based user information (name and email).
+
+- **Products list page:**  
+  Table of products loaded from the database with an **“Add Product”** button.
+
+- **Create product page:**  
+  Product form fields with validation messages.
 
 ---
 
-## Class Diagram (Milestone 3)
+## Class Diagram (Milestone 4)
 
-Planned/implemented classes include:
-
-### Models
-- `User`
+### Models (Forms)
 - `RegisterForm`
 - `LoginForm`
-- `Product`
 - `ProductForm`
 
 ### Controllers
@@ -201,48 +257,57 @@ Planned/implemented classes include:
 
 ### Service Layer (IoC / Spring Beans)
 - `AuthService` (interface)
-- `InMemoryAuthService` (implementation / `@Service`)
+- `AuthServiceImpl` (implementation / `@Service`)
 - `ProductService` (interface)
-- `InMemoryProductService` (implementation / `@Service`)
+- `ProductServiceImpl` (implementation / `@Service`)
+
+### Persistence Layer (Spring Data JDBC)
+- `UserEntity`
+- `ProductEntity`
+- `UserRepository`
+- `ProductRepository`
 
 ---
 
-## Service API Design (Milestone 3)
+## Service API Design (Milestone 4)
 
-Not applicable for Milestone 3.  
-Milestone 3 uses **Spring MVC server-rendered pages (Thymeleaf)** rather than REST endpoints.
+Not applicable for Milestone 4.  
+
+Milestone 4 uses **Spring MVC server-rendered pages (Thymeleaf)** rather than REST endpoints.
 
 ---
 
-## Security Design (Milestone 3)
+## Security Design (Milestone 4)
 
-Milestone 3 security is intentionally simplified:
+Milestone 4 security is intentionally simplified:
 
-- Authentication is simulated using an **in-memory user store**.
-- Access to Dashboard (and optionally Products) is enforced using **session attribute checks**.
-- Logout clears the session.
+- Authentication uses a **USERS** database table with session attributes.
+- Access to Dashboard and Products pages is enforced using session attribute checks.
+- Logout invalidates the session.
 
-Future milestones can introduce:
-
-- Spring Security for form login
+### Future Enhancements
+- Spring Security form login
+- Password hashing and stronger validation rules
 - Role-based access control
 - Securing endpoints using configuration instead of manual session checks
 
 ---
 
-## Miscellaneous
+## Miscellaneous Notes
 
-- Scope is intentionally kept small to match Milestone 3 requirements:  
-  Product creation + IoC refactor + no database.
-- Known limitation: users and products reset when the app restarts because storage is in-memory.
-- Thymeleaf fragment syntax should use the newer style: `~{fragments/file :: fragmentName}` to avoid warnings.
+- Users and products now persist because storage is handled by **MySQL**.
+- Thymeleaf view names must match template file names exactly:
+  - If a controller returns `"products"`, the template must be `templates/products.html`
+  - If a controller returns `"dashboard/index"`, the template must be `templates/dashboard/index.html`
+- Ensure the JDBC driver class name is correct:  
+  `com.mysql.cj.jdbc.Driver`
+- Ensure the database schema name matches the value in `spring.datasource.url`.
 
 ---
 
 ## Screencast URL
 
-- [My Presentation](https://www.loom.com/share/f2f1ace4a1e44568ba3c6f349ca10da4)
+- [My Presentation]()
 
-### Presentation Summary
+---
 
-In the screencast, I demonstrate running the Spring Boot application locally and navigating through the Milestone 3 features. I start at the Home page, show the shared Bootstrap navigation, and demonstrate registration and login using the refactored service beans (IoC). After logging in, I access the Dashboard and then navigate to the Products module. I show the Products list page and create a new product using the Create Product form with validation. After submitting the product, the application redirects back to the Products list where the new product appears, proving that product creation works without a database.

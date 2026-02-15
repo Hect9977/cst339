@@ -4,33 +4,31 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-// Register form model
 public class RegisterForm {
-    // First name field
-    @NotBlank(message = "First name is required")
-    @Size(min = 2, max = 50, message = "First name must be 2–50 characters")
+
+    // First name field with validation to ensure it is not blank
+    @NotBlank
     private String firstName;
 
-    // Last name field
-    @NotBlank(message = "Last name is required")
-    @Size(min = 2, max = 50, message = "Last name must be 2–50 characters")
+    // Last name field with validation to ensure it is not blank
+    @NotBlank
     private String lastName;
 
-    // Email field
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email must be valid")
+    // Email field with validation to ensure it is not blank and is a valid email format
+    @NotBlank @Email
     private String email;
 
-    // Password field
-    @NotBlank(message = "Password is required")
-    @Size(min = 8, max = 100, message = "Password must be at least 8 characters")
+    // Password field with validation to ensure it is not blank and has a minimum length of 4 characters
+    @NotBlank
+    @Size(min = 4, message = "Password must be at least 4 characters")
     private String password;
 
-    // Confirm password field
-    @NotBlank(message = "Confirm password is required")
+    // Confirm password field with validation to ensure it is not blank and has a minimum length of 4 characters
+    @NotBlank
+    @Size(min = 4, message = "Password must be at least 4 characters")
     private String confirmPassword;
 
-    // Getters and setters
+    // Getters and setters for all fields
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
 

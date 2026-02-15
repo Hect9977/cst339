@@ -20,7 +20,7 @@ public class InMemoryProductService implements ProductService {
         Product p = new Product(
                 form.getName(),
                 form.getDescription(),
-                form.getPrice(),
+                form.getPrice().intValue(),
                 form.getQuantity()
         );
         products.add(p);

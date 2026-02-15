@@ -8,45 +8,60 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.gcu.business.ProductService;
+import com.gcu.data.entity.ProductEntity;
 import com.gcu.models.ProductForm;
-import com.gcu.services.ProductService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
-// Controller for handling product-related requests
+// ProductController class to handle requests related to products, including listing and creating products
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
-    // IoC injection of ProductService
-    private final ProductService productService; // IoC injection
+    private final ProductService productService;
 
+    // Constructor injection of ProductService
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
 
-    // Display list of products 
+    // Show list of products
     @GetMapping
-    public String list(Model model) {
+    public String list(HttpSession session, Model model) {
+        if (session.getAttribute("userId") == null) return "redirect:/login";
+
         model.addAttribute("products", productService.findAll());
-        return "products/list";
+        return "products/index"; 
     }
 
     // Show form to create a new product
     @GetMapping("/create")
-    public String showCreate(Model model) {
+    public String createForm(HttpSession session, Model model) {
+        if (session.getAttribute("userId") == null) return "redirect:/login";
+
         model.addAttribute("form", new ProductForm());
-        return "products/create";
+        return "products/create"; 
     }
 
     // Handle form submission to create a new product
     @PostMapping("/create")
-    public String doCreate(@Valid @ModelAttribute("form") ProductForm form,
-                           BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "products/create";
-        }
-        productService.create(form);
+    public String createSubmit(HttpSession session,
+                               @Valid @ModelAttribute("form") ProductForm form,
+                               BindingResult result) {
+        if (session.getAttribute("userId") == null) return "redirect:/login";
+        if (result.hasErrors()) return "products/create";
+
+        ProductEntity entity = new ProductEntity(
+                null,
+                form.getName(),
+                form.getDescription(),
+                form.getPrice(),
+                form.getQuantity()
+        );
+
+        productService.create(entity);
         return "redirect:/products";
     }
 }

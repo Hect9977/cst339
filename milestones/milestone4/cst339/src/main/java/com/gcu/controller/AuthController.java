@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.gcu.business.AuthService;
+import com.gcu.data.entity.UserEntity;
 import com.gcu.models.LoginForm;
 import com.gcu.models.RegisterForm;
-import com.gcu.models.User;
-import com.gcu.services.AuthService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
-// Authentication controller
+// AuthController class to handle user authentication, including registration and login
 @Controller
 public class AuthController {
 
@@ -28,72 +28,67 @@ public class AuthController {
 
     // Show registration form
     @GetMapping("/register")
-    public String showRegister(Model model) {
+    public String registerForm(Model model) {
         model.addAttribute("form", new RegisterForm());
         return "auth/register";
     }
 
-    // Handle registration form submission
+    // Handle form submission for registration
     @PostMapping("/register")
-    public String doRegister(@Valid @ModelAttribute("form") RegisterForm form,
-            BindingResult bindingResult,
-            HttpSession session) {
+    public String registerSubmit(@Valid @ModelAttribute("form") RegisterForm form,
+            BindingResult result) {
+        if (result.hasErrors())
+            return "auth/register";
+        boolean ok = authService.register(
+                form.getFirstName(),
+                form.getLastName(),
+                form.getEmail(),
+                form.getPassword());
 
-        // Simple confirm-password check (validation rule)
-        if (form.getPassword() != null && !form.getPassword().equals(form.getConfirmPassword())) {
-            bindingResult.rejectValue("confirmPassword", "match", "Passwords must match");
-        }
-
-        if (bindingResult.hasErrors()) {
+        if (!ok) {
+            result.reject("register", "That email is already registered.");
             return "auth/register";
         }
-
-        User user = authService.register(form);
-        session.setAttribute("registeredEmail", user.getEmail());
         return "redirect:/register/success";
     }
 
-    // Show registration success page
+    // Show registration success page   
     @GetMapping("/register/success")
-    public String registerSuccess(HttpSession session, Model model) {
-        model.addAttribute("email", session.getAttribute("registeredEmail"));
+    public String registerSuccess() {
         return "auth/register-success";
     }
 
     // Show login form
     @GetMapping("/login")
-    public String showLogin(Model model) {
+    public String loginForm(Model model) {
         model.addAttribute("form", new LoginForm());
         return "auth/login";
     }
 
-    // Handle login form submission
+    // Handle form submission for login
     @PostMapping("/login")
-    public String doLogin(@Valid @ModelAttribute("form") LoginForm form,
-            BindingResult bindingResult,
+    public String loginSubmit(@Valid @ModelAttribute("form") LoginForm form,
+            BindingResult result,
             HttpSession session) {
-
-        if (bindingResult.hasErrors()) {
+        if (result.hasErrors())
             return "auth/login";
-        }
 
-        User user = authService.login(form.getEmail(), form.getPassword());
+        UserEntity user = authService.login(form.getEmail(), form.getPassword());
         if (user == null) {
-            bindingResult.reject("invalid", "Invalid email or password");
+            result.reject("login", "Invalid email or password.");
             return "auth/login";
         }
 
-        session.setAttribute("loggedInEmail", user.getEmail());
-        session.setAttribute("loggedInName", user.getFirstName());
+        session.setAttribute("userId", user.getId());
+        session.setAttribute("userEmail", user.getEmail());
+        session.setAttribute("userName", user.getFirstName() + " " + user.getLastName());
         return "redirect:/dashboard";
     }
 
-    // Handle logout
+    // Handle logout by invalidating the session and redirecting to the home page
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
-
-
 }
