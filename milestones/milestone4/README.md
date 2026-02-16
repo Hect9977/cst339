@@ -4,26 +4,26 @@
 
 ### Project Status and Design Report
 
-|User Story|Team Member|Hours Worked|Hours Remaining|
-|--|--|--:|--:|
-|Milestone 2: Main App Shell (Home + Navigation) | Solo | 4 | 0 |
-|Milestone 2: Registration Module (No Database) | Solo | 5 | 0 |
-|Milestone 2: Login Module (No Database) | Solo | 5 | 0 |
-|Milestone 2: Responsive UI using Bootstrap | Solo | 3 | 0 |
-|Milestone 2: Thymeleaf Layouts (Fragments: head/nav/footer) | Solo | 3 | 0 |
-|Milestone 2: Debugging + Fixes (Validation + Thymeleaf form errors) | Solo | 2 | 0 |
-|Milestone 3: Product Creation Module (Spring MVC, No Database) | Solo | 5 | 0 |
-|Milestone 3: Product List Page (to verify create works) | Solo | 2 | 0 |
-|Milestone 3: Refactor Auth to Spring Beans + IoC (Service Interfaces + Injection) | Solo | 3 | 0 |
-|Milestone 3: Updated Design Report + Diagrams | Solo | 2 | 0 |
-|Milestone 4: MySQL Database Setup + Schema (USERS, PRODUCTS) | Solo | 3 | 0 |
-|Milestone 4: Configure Spring Boot DataSource (Hikari) + JDBC Driver | Solo | 2 | 0 |
-|Milestone 4: Spring Data JDBC Repositories (UserRepository, ProductRepository) | Solo | 3 | 0 |
-|Milestone 4: Persist Registration/Login to Database (AuthServiceImpl + UserEntity) | Solo | 4 | 0 |
-|Milestone 4: Persist Products to Database (ProductServiceImpl + ProductEntity) | Solo | 4 | 0 |
-|Milestone 4: Fix Routing + Thymeleaf Template Paths (dashboard/products views) | Solo | 2 | 0 |
-|Milestone 4: Debugging + Fixes (DB name/table errors, template errors, driver class typo) | Solo | 3 | 0 |
-|Milestone 4: Updated Design Report + Diagrams | Solo | 2 | 0 |
+| User Story                                                                                | Team Member | Hours Worked | Hours Remaining |
+| ----------------------------------------------------------------------------------------- | ----------- | -----------: | --------------: |
+| Milestone 2: Main App Shell (Home + Navigation)                                           | Solo        |            4 |               0 |
+| Milestone 2: Registration Module (No Database)                                            | Solo        |            5 |               0 |
+| Milestone 2: Login Module (No Database)                                                   | Solo        |            5 |               0 |
+| Milestone 2: Responsive UI using Bootstrap                                                | Solo        |            3 |               0 |
+| Milestone 2: Thymeleaf Layouts (Fragments: head/nav/footer)                               | Solo        |            3 |               0 |
+| Milestone 2: Debugging + Fixes (Validation + Thymeleaf form errors)                       | Solo        |            2 |               0 |
+| Milestone 3: Product Creation Module (Spring MVC, No Database)                            | Solo        |            5 |               0 |
+| Milestone 3: Product List Page (to verify create works)                                   | Solo        |            2 |               0 |
+| Milestone 3: Refactor Auth to Spring Beans + IoC (Service Interfaces + Injection)         | Solo        |            3 |               0 |
+| Milestone 3: Updated Design Report + Diagrams                                             | Solo        |            2 |               0 |
+| Milestone 4: MySQL Database Setup + Schema (USERS, PRODUCTS)                              | Solo        |            3 |               0 |
+| Milestone 4: Configure Spring Boot DataSource (Hikari) + JDBC Driver                      | Solo        |            2 |               0 |
+| Milestone 4: Spring Data JDBC Repositories (UserRepository, ProductRepository)            | Solo        |            3 |               0 |
+| Milestone 4: Persist Registration/Login to Database (AuthServiceImpl + UserEntity)        | Solo        |            4 |               0 |
+| Milestone 4: Persist Products to Database (ProductServiceImpl + ProductEntity)            | Solo        |            4 |               0 |
+| Milestone 4: Fix Routing + Thymeleaf Template Paths (dashboard/products views)            | Solo        |            2 |               0 |
+| Milestone 4: Debugging + Fixes (DB name/table errors, template errors, driver class typo) | Solo        |            3 |               0 |
+| Milestone 4: Updated Design Report + Diagrams                                             | Solo        |            2 |               0 |
 
 ---
 
@@ -34,6 +34,7 @@
 For **Milestone 4**, the project evolves from in-memory storage into a database-backed Spring Boot N-layer web application.
 
 The application uses:
+
 - Spring MVC controllers to handle routes (Home, Register, Login, Dashboard, Products).
 - Thymeleaf templates for server-side rendered pages.
 - Bootstrap CDN for responsive layout and consistent UI.
@@ -44,16 +45,19 @@ The application uses:
 ### Retrospective Results
 
 **What went well**
+
 - Switching from in-memory lists to Spring Data JDBC repositories made persistence straightforward.
 - Once the templates were placed in the correct location/names, navigation became stable again.
 - Database-backed products creation and listing match the Milestone requirements well.
 
 **What was challenging**
+
 - Database mismatch issues (application pointing to a different schema than the one where tables were created).
 - Template resolver errors (Whitelabel 500) when the controller returned a view name that did not exist.
 - DataSource failures when the driver class name was incorrect (typo such as `com.mysql.cj.jdbc.Drive` instead of `Driver`) or the MySQL connector dependency was missing.
 
 **How we fixed issues**
+
 - Verified the configured DB name in `application.properties` matched the schema where tables exist.
 - Ensured templates exist under `src/main/resources/templates/` and match the returned view names.
 - Confirmed the MySQL connector dependency is present and the driver class is correct.
@@ -109,9 +113,11 @@ This Milestone 4 application uses a layered approach:
 ### Database Design (Milestone 4)
 
 **Schema**
+
 - A single schema/database (example: `milestoneDB`)
 
 **Tables**
+
 - `USERS`
   - `ID` (PK, auto increment)
   - `EMAIL` (unique)
@@ -193,6 +199,7 @@ flowchart TD
     Dashboard -. "If not logged in\nredirect" .-> Login
     Products -. "If not logged in\nredirect" .-> Login
 ```
+
 </details>
 
 ## How the Pages Interact (Milestone 4)
@@ -200,7 +207,7 @@ flowchart TD
 Home → Register → Register Success  
 Home → Login → Dashboard  
 Dashboard → Products List → Create Product → Products List  
-Dashboard → Logout → Home  
+Dashboard → Logout → Home
 
 ---
 
@@ -245,23 +252,27 @@ Dashboard → Logout → Home
 ## Class Diagram (Milestone 4)
 
 ### Models (Forms)
+
 - `RegisterForm`
 - `LoginForm`
 - `ProductForm`
 
 ### Controllers
+
 - `HomeController`
 - `AuthController`
 - `DashboardController`
 - `ProductController`
 
 ### Service Layer (IoC / Spring Beans)
+
 - `AuthService` (interface)
 - `AuthServiceImpl` (implementation / `@Service`)
 - `ProductService` (interface)
 - `ProductServiceImpl` (implementation / `@Service`)
 
 ### Persistence Layer (Spring Data JDBC)
+
 - `UserEntity`
 - `ProductEntity`
 - `UserRepository`
@@ -271,7 +282,7 @@ Dashboard → Logout → Home
 
 ## Service API Design (Milestone 4)
 
-Not applicable for Milestone 4.  
+Not applicable for Milestone 4.
 
 Milestone 4 uses **Spring MVC server-rendered pages (Thymeleaf)** rather than REST endpoints.
 
@@ -286,6 +297,7 @@ Milestone 4 security is intentionally simplified:
 - Logout invalidates the session.
 
 ### Future Enhancements
+
 - Spring Security form login
 - Password hashing and stronger validation rules
 - Role-based access control
@@ -307,7 +319,6 @@ Milestone 4 security is intentionally simplified:
 
 ## Screencast URL
 
-- [My Presentation]()
+- [My Presentation](https://www.loom.com/share/f9899354520d45dfa12d69c6c2a24f43)
 
 ---
-
