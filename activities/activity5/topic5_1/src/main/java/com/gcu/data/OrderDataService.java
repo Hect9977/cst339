@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 import com.gcu.data.entity.OrderEntity;
 import com.gcu.data.repository.OrdersRepository;
 
-// This class is a Spring service that implements the DataAccessInterface for OrderEntity objects, providing methods to perform CRUD operations using the OrdersRepository.
 @Service
 public class OrderDataService implements DataAccessInterface<OrderEntity> {
 
-    // The OrdersRepository is injected into this service using constructor injection, allowing it to perform database operations on OrderEntity objects.
+    // Injecting the OrdersRepository using constructor injection
     @Autowired
     private final OrdersRepository ordersRepository;
 
@@ -22,30 +21,33 @@ public class OrderDataService implements DataAccessInterface<OrderEntity> {
         this.ordersRepository = ordersRepository;
     }
 
-    // The findById method is currently a placeholder that returns null. It should be implemented to retrieve an OrderEntity by its ID from the database.
+    // Implementing the DataAccessInterface methods
     @Override
-    public OrderEntity findById(int id) {
-        return null;
+    public OrderEntity findById(String id) {
+        try {
+            return ordersRepository.getOrderById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    // The findAll method retrieves all OrderEntity objects from the database using the OrdersRepository and returns them as a list.
+    // This method is not required by the activity, but it's a common method in data
+    // access services
     @Override
     public List<OrderEntity> findAll() {
-        // Created a list to hold the OrderEntity objects retrieved from the database.
         List<OrderEntity> orders = new ArrayList<>();
-
-        // The findAll method of the OrdersRepository returns an Iterable of OrderEntity objects, which we iterate over and add to the orders list. If an exception occurs during this process, it is caught and printed to the console.
         try {
             Iterable<OrderEntity> orderIterable = ordersRepository.findAll();
             orderIterable.forEach(orders::add);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return orders;
     }
 
-    // The create method attempts to save a new OrderEntity to the database using the OrdersRepository. It returns true if the operation is successful, and also returns true if an exception occurs (as per the instructions).
+    // The create method is required by the activity, and it should return true even
+    // if an exception occurs
     @Override
     public boolean create(OrderEntity order) {
         try {
@@ -53,19 +55,21 @@ public class OrderDataService implements DataAccessInterface<OrderEntity> {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return true;
+            return true; // per your activity instructions
         }
     }
 
-    // The update method is currently a placeholder that returns true. It should be implemented to update an existing OrderEntity in the database.
+    // The update and delete methods are required by the activity, but they should
+    // return true without performing any operations
     @Override
     public boolean update(OrderEntity t) {
-        return true; 
+        return true;
     }
 
-    // The delete method is currently a placeholder that returns true. It should be implemented to delete an existing OrderEntity from the database.
+    // The delete method is required by the activity, but it should return true
+    // without performing any operations
     @Override
     public boolean delete(OrderEntity t) {
-        return true; 
+        return true;
     }
 }

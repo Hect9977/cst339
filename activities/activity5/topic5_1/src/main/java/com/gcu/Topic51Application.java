@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan({ "com.gcu" })
-public class Topic42Application {
+public class Topic51Application {
     public static void main(String[] args) {
-        SpringApplication.run(Topic42Application.class, args);
+        SpringApplication.run(Topic51Application.class, args);
     }
 }

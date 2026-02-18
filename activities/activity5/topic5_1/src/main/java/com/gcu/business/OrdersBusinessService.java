@@ -31,12 +31,11 @@ public class OrdersBusinessService implements OrdersBusinessServiceInterface {
         // convert each OrderEntity -> OrderModel
         for (OrderEntity e : ordersEntity) {
             ordersDomain.add(new OrderModel(
-                e.getId(),
-                e.getOrderNo(),
-                e.getProductName(),
-                e.getPrice(),
-                e.getQuantity()
-            ));
+                    e.getId(),
+                    e.getOrderNo(),
+                    e.getProductName(),
+                    e.getPrice(),
+                    e.getQuantity()));
         }
 
         // return domain list (no persistence annotations leak into UI)
@@ -51,5 +50,22 @@ public class OrdersBusinessService implements OrdersBusinessServiceInterface {
     @Override
     public void destroy() {
         System.out.println("OrdersBusinessService.destroy() called");
+    }
+
+    // This method is required by the activity, and it should call the data service
+    // to get an OrderEntity by its ID, convert it to an OrderModel, and return it.
+    // If the OrderEntity is null, then this method should return null.
+    @Override
+    public OrderModel getOrderById(String id) {
+        OrderEntity orderEntity = service.findById(id);
+        if (orderEntity == null) {
+            return null;
+        }
+        return new OrderModel(
+                orderEntity.getId(),
+                orderEntity.getOrderNo(),
+                orderEntity.getProductName(),
+                orderEntity.getPrice(),
+                orderEntity.getQuantity());
     }
 }

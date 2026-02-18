@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.gcu.data.entity.OrderEntity;
 
 public interface OrdersRepository extends MongoRepository<OrderEntity, String> {
-    // No methods needed. Use default CRUD.
+    OrderEntity getOrderById(String id);
 }

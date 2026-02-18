@@ -7,11 +7,13 @@ import com.gcu.model.OrderModel;
 
 public class AnotherOrdersBusinessService implements OrdersBusinessServiceInterface {
 
+    // Implementing the test method to print a message to the console
     @Override
     public void test() {
         System.out.println("Hello from the anotherOrdersBusinessService");
     }
 
+    // Implementing the getOrders method to return a list of hardcoded orders
     @Override
     public List<OrderModel> getOrders() {
         List<OrderModel> orders = new ArrayList<>();
@@ -23,12 +25,27 @@ public class AnotherOrdersBusinessService implements OrdersBusinessServiceInterf
         return orders;
     }
 
+    // Implementing the getOrderById method to search for an order by its ID in the
+    // list of orders
+    @Override
+    public OrderModel getOrderById(String id) {
+        List<OrderModel> orders = getOrders();
+        for (OrderModel order : orders) {
+            if (order.getId().equals(id)) {
+                return order;
+            }
+        }
+        return null;
+    }
+
     // Implement init() + destroy() methods
     @Override
     public void init() {
         System.out.println("AnotherOrdersBusinessService.init() called");
     }
 
+    // The destroy method is required by the activity, and it should print a
+    // messageto the console when called
     @Override
     public void destroy() {
         System.out.println("AnotherOrdersBusinessService.destroy() called");
