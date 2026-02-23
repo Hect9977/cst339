@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<!-- REGISTER PAGE-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Register')"></head>
+<body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<main class="container py-4" style="max-width: 760px;">
+  <h2 class="mb-3">Register</h2>
+
+  <form th:action="@{/register}" th:object="${form}" method="post" class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">First Name</label>
+      <input class="form-control" th:field="*{firstName}">
+      <div class="text-danger small" th:errors="*{firstName}"></div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Last Name</label>
+      <input class="form-control" th:field="*{lastName}">
+      <div class="text-danger small" th:errors="*{lastName}"></div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Email</label>
+      <input class="form-control" th:field="*{email}">
+      <div class="text-danger small" th:errors="*{email}"></div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control" th:field="*{password}">
+      <div class="text-danger small" th:errors="*{password}"></div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Confirm Password</label>
+      <input type="password" class="form-control" th:field="*{confirmPassword}">
+      <div class="text-danger small" th:errors="*{confirmPassword}"></div>
+    </div>
+
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit">Create Account</button>
+    </div>
+  </form>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
