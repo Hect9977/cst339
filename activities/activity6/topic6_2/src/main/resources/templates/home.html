@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title th:text="${title}">My Home</title>
+  </head>
+  <body>
+    <h1>Welcome</h1>
+    <p>This is the Activity 6 Part 1 Home page.</p>
+
+    <a th:href="@{/login}">Go to Login</a>
+  </body>
+</html>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f5f5f5;
+  }
+  h1 {
+    color: #333;
+  }
+  p {
+    color: #666;
+    line-height: 1.6;
+  }
+  a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  a:hover {
+    background-color: #0056b3;
+  }
+</style>

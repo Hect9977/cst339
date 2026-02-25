@@ -1,0 +1,49 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="layouts/defaultTemplate"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title th:text="${title}">Orders</title>
+  </head>
+
+  <body>
+    <!-- EVERYTHING you want inside the template must be inside this fragment -->
+    <section layout:fragment="content">
+      <h2 th:text="${title}">My Orders</h2>
+
+      <table cellpadding="12" cellspacing="8" style="border: none">
+        <thead>
+          <tr>
+            <th style="text-align: center; border: none">Order Number</th>
+            <th style="text-align: center; border: none">Product Name</th>
+            <th style="text-align: center; border: none">Price</th>
+            <th style="text-align: center; border: none">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${orders.empty}">
+            <th style="text-align: center" colspan="4">No Orders Available</th>
+          </tr>
+
+          <tr th:each="order : ${orders}">
+            <td style="text-align: center; border: none">
+              <h5 th:text="${order.orderNo}">000000001</h5>
+            </td>
+            <td style="text-align: center; border: none">
+              <h5 th:text="${order.productName}">Product 1</h5>
+            </td>
+            <td style="text-align: center; border: none">
+              <h5 th:text="${order.price}">1.00</h5>
+            </td>
+            <td style="text-align: center; border: none">
+              <h5 th:text="${order.quantity}">1</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>
