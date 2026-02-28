@@ -1,0 +1,30 @@
+<!-- ---> NEW FILE for Milestone 5: Product Display Module (single product view) -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${title}">Product Details</title>
+</head>
+<body>
+  <h1 th:text="${title}">Product Details</h1>
+
+  <!--ADDED: display fields -->
+  <p><b>ID:</b> <span th:text="${product.id}"></span></p>
+  <p><b>Name:</b> <span th:text="${product.name}"></span></p>
+  <p><b>Description:</b> <span th:text="${product.description}"></span></p>
+  <p><b>Price:</b> <span th:text="${product.price}"></span></p>
+  <p><b>Quantity:</b> <span th:text="${product.quantity}"></span></p>
+
+  <!--ADDED: navigation + actions -->
+  <p>
+    <a th:href="@{/products}">Back</a> |
+    <a th:href="@{/products/{id}/edit(id=${product.id})}">Edit</a> |
+
+    <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post"
+          onsubmit="return confirm('Delete this product?');"
+          style="display:inline;">
+      <button type="submit">Delete</button>
+    </form>
+  </p>
+</body>
+</html>
