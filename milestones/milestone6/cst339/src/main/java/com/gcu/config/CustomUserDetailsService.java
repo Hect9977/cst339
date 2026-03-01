@@ -12,15 +12,18 @@ import org.springframework.stereotype.Service;
 import com.gcu.data.entity.UserEntity;
 import com.gcu.data.repository.UserRepository;
 
+// CustomUserDetailsService
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    // Constructor injection of UserRepository
     public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    // Load user by email and convert to UserDetails
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByEmail(email)
