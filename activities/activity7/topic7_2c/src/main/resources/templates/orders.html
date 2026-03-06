@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CST-339 Spring Boot Application</title>
+  </head>
+  <body>
+    <div layout:fragment="content">
+      <table style="width: 25%">
+        <thead>
+          <tr>
+            <th style="text-align: center">Order No</th>
+            <th style="text-align: center">Product Name</th>
+            <th style="text-align: center">Price</th>
+            <th style="text-align: center">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${orders.empty}">
+            <td colspan="4" style="text-align: center">No orders found.</td>
+          </tr>
+          <tr th:each="order : ${orders}">
+            <td style="text-align: center">
+              <h5 th:text="${order.orderNo}">000000001</h5>
+            </td>
+            <td style="text-align: center">
+              <h5 th:text="${order.productName}">Product 1</h5>
+            </td>
+            <td style="text-align: center">
+              <h5 th:text="${order.price}">1.00</h5>
+            </td>
+            <td style="text-align: center">
+              <h5 th:text="${order.quantity}">1</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <a th:href="@{.}">Back to Home</a><br />
+    </div>
+  </body>
+</html>
