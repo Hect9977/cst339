@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<!-- REGISTER SUCCESS PAGE-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head('Registered')"></head>
+<body>
+<nav th:replace="fragments/navbar :: navbar"></nav>
+
+<main class="container py-4" style="max-width: 760px;">
+  <div class="alert alert-success">
+    Registration complete for: <strong th:text="${email}">email</strong>
+  </div>
+  <a class="btn btn-outline-primary" href="/login">Go to Login</a>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
